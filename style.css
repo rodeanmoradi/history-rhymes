@@ -1,0 +1,11 @@
+#box1{
+    text-shadow: 0px 3px 6px black;
+    width: 185px;
+    font-family: instrument serif;
+    font-size: 100px;
+    width: 300px;
+    height: 275px;
+    border-radius: 3px;
+    text-align: center;
+    padding: 3%;
+}
