@@ -24,6 +24,14 @@ def word_search(dataset):
 
 historical_dataset = dataset.filter(word_search)
 
+batch = []
 for row in historical_dataset:
-    print(row["name"])
-
+    if len(batch) < 500:
+        batch.append(row["abstract"])
+    else:
+        response = client.embeddings.create(input=batch, model="text-embedding-3-small")
+        # Save to vector, keep track of name
+        batch = []
+        batch.append(row["abstract"])
+response = client.embeddings.create(input=batch, model="text-embedding-3-small")
+# Save to vector db
