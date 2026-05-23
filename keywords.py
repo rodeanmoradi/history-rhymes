@@ -1,3 +1,15 @@
+import re
+
+def keyword_filter(dataset):
+    if dataset["abstract"] is not None:
+        for word in words:
+            if re.search(r'\b' + word + r'\b', dataset["abstract"].lower()):
+                return True    
+        for word in words:
+            if re.search(r'\b' + word + r'\b', dataset["name"].lower()):
+                return True
+    return False
+
 words = [
     "war",
     "battle",

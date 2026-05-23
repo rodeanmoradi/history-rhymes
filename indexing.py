@@ -1,25 +1,14 @@
 from datasets import load_dataset
-from keywords import words
+from keywords import keyword_filter
 from dotenv import load_dotenv
 from openai import OpenAI
-from pinecone import Pinecone, ServerlessSpec
-import re
+from pinecone import Pinecone
 import os
 
 load_dotenv()
 client = OpenAI()
 pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index = pc.Index(host=os.getenv("PINECONE_HOST"))
-
-def keyword_filter(dataset):
-    if dataset["abstract"] is not None:
-        for word in words:
-            if re.search(r'\b' + word + r'\b', dataset["abstract"].lower()):
-                return True    
-        for word in words:
-            if re.search(r'\b' + word + r'\b', dataset["name"].lower()):
-                return True
-    return False
 
 def store_vectors(batch, names, abstracts):
     response = client.embeddings.create(input=abstracts, model="text-embedding-3-small")
