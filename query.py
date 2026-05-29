@@ -17,7 +17,7 @@ for i in range(len(filtered_headlines)):
 idx = int(input("Select index: "))
 article = filtered_headlines[idx]
 
-# Embed and query
+# Embed and query TODO: EVAL
 response = open_ai_client.embeddings.create(input=article, model="text-embedding-3-small")
 results = index.query(vector=response.data[0].embedding, top_k=10)
 
@@ -25,7 +25,6 @@ for match in results.matches:
     print(match.id)
 
 # Pass similar articles to Claude, get most intriguing, generate lesson about topic
-
 #message = anthropic_client.messages.create(
 #  model="claude-opus-4-8",
 #  max_tokens=1024,
