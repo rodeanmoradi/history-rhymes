@@ -1,23 +1,16 @@
 from datasets import load_dataset
 from keywords import keyword_filter
-from dotenv import load_dotenv
-from openai import OpenAI
-from pinecone import Pinecone
-import os
-
-load_dotenv()
-client = OpenAI()
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
-index = pc.Index(host=os.getenv("PINECONE_HOST"))
+from config import open_ai_client, enc, index
 
 def store_vectors(batch, names, abstracts):
-    response = client.embeddings.create(input=abstracts, model="text-embedding-3-small")
+    response = open_ai_client.embeddings.create(input=abstracts, model="text-embedding-3-small")
     vectors = []
     for i in range(len(batch)):
         # Ensure empty strings are excluded
         if names[i].encode('ascii', errors='ignore').decode('ascii') == "":
             continue
-        vector_dict = {"id": names[i].encode('ascii', errors='ignore').decode('ascii'), "values": response.data[i].embedding}
+        vector_dict = {"id": names[i].encode('ascii', errors='ignore').decode('ascii'), "values": response.data[i].embedding, 
+                       "metadata": {"abstract": abstracts[i]}}
         vectors.append(vector_dict)
     index.upsert(vectors=vectors)
 
@@ -26,10 +19,19 @@ historical_dataset = dataset.filter(keyword_filter)
 
 batch = []
 for row in historical_dataset:
-    if len(batch) < 400:
-        batch.append((row["name"], row["abstract"][:20000]))
+    if len(batch) < 200:
+        # Append name and abstract, ensuring abstract does not exceed 8192 tokens
+        tokens = enc.encode(row["abstract"])
+        if len(tokens) >= 8192:
+            batch.append((row["name"], enc.decode(tokens[:8192])))
+        else:
+            batch.append((row["name"], row["abstract"]))
     else:
         store_vectors(batch, [item[0] for item in batch], [item[1] for item in batch])
         batch = []
-        batch.append((row["name"], row["abstract"][:20000]))
+        tokens = enc.encode(row["abstract"])
+        if len(tokens) >= 8192:
+            batch.append((row["name"], enc.decode(tokens[:8192])))
+        else:
+            batch.append((row["name"], row["abstract"]))
 store_vectors(batch, [item[0] for item in batch], [item[1] for item in batch])
