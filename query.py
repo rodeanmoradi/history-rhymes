@@ -24,13 +24,7 @@ response = open_ai_client.embeddings.create(input=article, model="text-embedding
 results = index.query(vector=response.data[0].embedding, top_k=5, include_metadata=True)
 
 # Pass similar articles to Claude, get most intriguing, generate lesson about topic
-message = anthropic_client.messages.create(
-    model="claude-opus-4-8",
-    max_tokens=1024,
-    messages=[{
-        "role": "user",
-        "content": get_lesson_prompt(results, article)
-    }]
-)
+message = anthropic_client.messages.create(model="claude-opus-4-8", max_tokens=1024,
+                                           messages=[{"role": "user", "content": get_lesson_prompt(results, article)}])
 
 print(message.content[0].text)
