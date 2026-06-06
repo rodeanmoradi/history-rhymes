@@ -10,6 +10,7 @@ def keyword_filter(dataset):
                 return True
     return False
 
+# TODO: dates
 words = [
     "war",
     "battle",
