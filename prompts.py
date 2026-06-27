@@ -1,29 +1,3 @@
-def get_lesson_prompt(results, article):
-    lesson_prompt = f"""You are a highly knowledgeable historian, journalist, and educator. Pick the article from the following list that 
-    provides the most intriguing, perhaps unobvious, and intellectually rewarding historical parallel to the selected news headline. 
-    Once you have done so, you must generate a lesson regarding this article's topic using your knowledge and the article. This lesson 
-    should be written in a format that is engaging and keeps the reader entertained. It should not take more than one minute to read 
-    through. 
-
-    Articles 1: {results.matches[0].id}, 
-    Abstract: {results.matches[0].metadata["abstract"]}, 
-
-    Article 2: {results.matches[1].id}, 
-    Abstract: {results.matches[1].metadata["abstract"]}, 
-
-    Article 3: {results.matches[2].id}, 
-    Abstract: {results.matches[2].metadata["abstract"]}, 
-
-    Article 4: {results.matches[3].id},
-    Abstract: {results.matches[3].metadata["abstract"]}, 
-    
-    Article 5: {results.matches[4].id}, 
-    Abstract: {results.matches[4].metadata["abstract"]},
-
-    Selected Headline: {article}"""
-
-    return lesson_prompt
-
 def get_search_prompt(article):
 
     search_prompt = f"""Goal: find three historical parallel given current events. You are an expert historian, geopolitical intellectual, 
@@ -36,7 +10,7 @@ def get_search_prompt(article):
 
     return search_prompt
 
-def get_eval_prompt(search_results, results):
+def get_eval_prompt(search_result, query_result):
 
     eval_prompt = f"""Goal: evaluate historical parallels. Given the historical topics below, evaluate them based on intellectual
     stimulation, intrigue, as well as (perhaps) being unobvious. Using this criteria, select one topic from the group. Once you have
@@ -46,21 +20,23 @@ def get_eval_prompt(search_results, results):
     either with the topic you have chosen or the word "REDO" ALONE. In other words, if you decide the final chosen topic does not meet the
     criteria well enough, you must output the following: "REDO".
     
-    Topic 1: {results.matches[0].id}, 
-    Abstract: {results.matches[0].metadata["abstract"]}, 
+    Topic 1: {query_result.matches[0].id}, 
+    Abstract: {query_result.matches[0].metadata["abstract"]}, 
 
-    Topic 2: {results.matches[1].id}, 
-    Abstract: {results.matches[1].metadata["abstract"]}, 
+    Topic 2: {query_result.matches[1].id}, 
+    Abstract: {query_result.matches[1].metadata["abstract"]}, 
 
-    Topic 3: {results.matches[2].id}, 
-    Abstract: {results.matches[2].metadata["abstract"]}, 
+    Topic 3: {query_result.matches[2].id}, 
+    Abstract: {query_result.matches[2].metadata["abstract"]}, 
 
-    Topic 4: {results.matches[3].id},
-    Abstract: {results.matches[3].metadata["abstract"]}, 
+    Topic 4: {query_result.matches[3].id},
+    Abstract: {query_result.matches[3].metadata["abstract"]}, 
     
-    Topic 5: {results.matches[4].id}, 
-    Abstract: {results.matches[4].metadata["abstract"]},
+    Topic 5: {query_result.matches[4].id}, 
+    Abstract: {query_result.matches[4].metadata["abstract"]},
+
+    Topics 6-8: {search_result.content[0].text}
     
-    Topics 6-8: {search_results}"""
+    """
     
     return eval_prompt
