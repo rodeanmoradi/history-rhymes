@@ -77,7 +77,7 @@ def get_eval_prompt(search_result, query_result):
         Topic 5: {query_result.matches[4].id}, 
         Abstract: {query_result.matches[4].metadata["abstract"]},
 
-        Topics 6-8: {search_result.content[0].text}
+        Topics 6-8: {search_result}
     """
     
     return eval_prompt

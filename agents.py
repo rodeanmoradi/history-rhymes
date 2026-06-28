@@ -2,32 +2,20 @@ from config import anthropic_client, open_ai_client, index
 from prompts import get_search_prompt, get_eval_prompt
 
 def search(article, description):
-    if description is None:
-        response = anthropic_client.messages.create(
-            model="claude-opus-4-8",
-            max_tokens=1024,
-            messages=[
-                {
-                    "role": "user",
-                    "content": get_search_prompt(article, description),
-                }
-            ],
-            tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
-        )
-    else:
-        response = anthropic_client.messages.create(
-            model="claude-opus-4-8",
-            max_tokens=1024,
-            messages=[
-                {
-                    "role": "user",
-                    "content": get_search_prompt(article, description),
-                }
-            ],
-            tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
-        )
+    response = anthropic_client.messages.create(
+        model="claude-opus-4-8",
+        max_tokens=1024,
+        messages=[
+            {
+                "role": "user",
+                "content": get_search_prompt(article, description),
+            }
+        ],
+        tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 3}]
+    )
 
     search_result = response.content[0].text
+    
     return search_result
 
 def query(article, description):
