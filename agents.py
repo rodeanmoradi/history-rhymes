@@ -56,7 +56,8 @@ def search_eval(search_result, query_result):
             "input_schema": {
                 "type": "object",
                 "properties": {
-                    "": {}
+                    "article": {},
+                    "description": {}
                 }
             }
         },
@@ -66,7 +67,8 @@ def search_eval(search_result, query_result):
             "input_schema": {
                 "type": "object",
                 "properties": {
-                    "": {}
+                    "article": {},
+                    "description": {}
                 }
             }  
         }]
