@@ -29,7 +29,7 @@ def get_lesson_prompt(results, article):
 def get_search_prompt(article, description):
 
     if description is None:
-        search_prompt = f"""
+        prompt = f"""
             Goal: find three historical parallel given current events. You are an expert historian, geopolitical intellectual, 
             and journalist. Given the below article, your task is to conduct deep research and find three parallel historical events. The events must
             be intriguing, at least somewhat significant, and may perhaps be unobvious. It is irrelevant when the events you have chosen took place.
@@ -39,7 +39,7 @@ def get_search_prompt(article, description):
             Article: {article}
         """
     else:
-        search_prompt = f"""
+        prompt = f"""
             Goal: find three historical parallel given a current event and its description. You are an expert historian, 
             geopolitical intellectual, and journalist. Given the below article, your task is to conduct deep research and find three parallel 
             historical events. The events must be intriguing, at least somewhat significant, and may perhaps be unobvious. It is irrelevant 
@@ -50,17 +50,18 @@ def get_search_prompt(article, description):
             Description: {description}
         """
 
-    return search_prompt
+    return prompt
 
 def get_eval_prompt(search_result, query_result):
 
-    eval_prompt = f"""
+    prompt = f"""
         Goal: evaluate historical parallels. Given the historical topics below, evaluate them based on intellectual
         stimulation, intrigue, as well as (perhaps) being unobvious. Using this criteria, select one topic from the group. Once you have
         selected one topic, evaluate that one using the same criteria as before, but without comparing it to the others (evaluate it on its
         own merits). Upon evaluating the final chosen topic, if you find that it does not adhere to the criteria well enough (i.e it is not
         intellectually stimulating enough, intriguing enough, etc.), you may choose to conduct the topic search once more using the web
-        search tool, query tool, or both.
+        search tool, query tool, or both. For maximum efficiency, whenever you need to perform multiple independent operations, invoke all 
+        relevant tools simultaneously rather than sequentially.
         
         Topic 1: {query_result.matches[0].id}, 
         Abstract: {query_result.matches[0].metadata["abstract"]}, 
@@ -80,4 +81,4 @@ def get_eval_prompt(search_result, query_result):
         Topics 6-8: {search_result}
     """
     
-    return eval_prompt
+    return prompt

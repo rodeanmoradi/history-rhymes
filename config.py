@@ -6,8 +6,8 @@ import anthropic
 import os
 import tiktoken
 
+# TODO: def init_clients() and other improvements
 load_dotenv()
-
 open_ai_client = OpenAI()
 anthropic_client = anthropic.Anthropic()
 news_api_client = NewsApiClient(api_key=os.getenv("NEWSAPI_API_KEY"))
