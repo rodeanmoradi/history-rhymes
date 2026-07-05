@@ -3,7 +3,7 @@ from prompts import get_search_prompt, get_eval_prompt
 
 def search(article, description):
     response = anthropic_client.messages.create(
-        model="claude-haiku-4-5",
+        model="claude-opus-4-8",
         max_tokens=1024,
         messages=[{
             "role": "user",
@@ -29,7 +29,6 @@ def query(article, description):
     return result
 
 def search_eval(messages):
-    # TODO: Make descriptions for tools
     query_description = """
         Searches a curated vector index of historical Wikipedia articles by semantic similarity. Provide a description phrased as 
         the themes and concepts you want matches for — the description is what gets embedded and searched, so abstract thematic 
@@ -78,8 +77,8 @@ def search_eval(messages):
         }  
     }]
     response = anthropic_client.messages.create(
-        model="claude-haiku-4-5",
-        max_tokens=2048,
+        model="claude-opus-4-8",
+        max_tokens=1024,
         messages=messages,
         tools=tools
     )
@@ -94,6 +93,7 @@ def get_tool():
 
     return tools
 
+# TODO: Optimize tokens
 def pipeline(article):
     count = 0
     messages = []
@@ -122,7 +122,7 @@ def pipeline(article):
                     tool_results.extend([{"type": "tool_result", "tool_use_id": f"{block.id}", "content": [{"type": "text", "text": f"{result}"}]}])
 
             messages.extend(
-                [{"role": "assistant", "content": eval_response.content},{"role": "user", "content": tool_results},])
+                [{"role": "assistant", "content": eval_response.content}, {"role": "user", "content": tool_results},])
         else:
             topic = eval_response.content[0].text
 

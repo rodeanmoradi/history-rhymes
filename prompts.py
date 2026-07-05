@@ -30,21 +30,21 @@ def get_search_prompt(article, description):
 
     if description is None:
         prompt = f"""
-            Goal: find three historical parallels given current events. You are an expert historian, geopolitical intellectual, 
-            and journalist. Given the below article, your task is to conduct deep research and find three parallel historical events. The events must
-            be intriguing, at least somewhat significant, and may perhaps be unobvious. It is irrelevant when the events you have chosen took place.
-            Once you choose the topics, provide summaries. These summaries must not exceed 100 words. Your output should ONLY contain the three
+            Find three historical parallels given current events. You are an expert historian, geopolitical intellectual, 
+            and journalist. Given an article, your task is to do deep research and find three parallel historical events. The events must
+            be intriguing, at least somewhat significant, and may be unobvious. It is irrelevant when the events you have chosen took place.
+            Once you choose the topics, give summaries. Summaries must not exceed 100 words. Your output should ONLY contain three
             topics and their summaries.
             
             Article: {article}
         """
     else:
         prompt = f"""
-            Goal: find three historical parallels given a current event and its description. You are an expert historian, 
+            Find three historical parallels given a current event and its description. You are an expert historian, 
             geopolitical intellectual, and journalist. Given the below article, your task is to conduct deep research and find three parallel 
             historical events. The events must be intriguing, at least somewhat significant, and may perhaps be unobvious. It is irrelevant 
-            when the events you have chosen took place. Once you choose the topics, provide summaries. These summaries must not exceed 100 words. 
-            Your output should ONLY contain the three topics and their summaries.
+            when the events you have chosen took place. Once you choose the topics, give summaries. Summaries must not exceed 100 words. 
+            Your output should ONLY contain three topics and their summaries.
             
             Article: {article}
             Description: {description}
@@ -54,13 +54,13 @@ def get_search_prompt(article, description):
 
 def get_eval_prompt(search_result, query_result):
     prompt = f"""
-        Goal: evaluate historical parallels. Given the historical topics below, evaluate them (internally) based on intellectual
-        stimulation, intrigue, as well as (perhaps) being unobvious. Using this criteria, select one topic from the group. Once you have
-        selected one topic, evaluate that one using the same criteria as before, but without comparing it to the others (evaluate it on its
-        own merits). Upon evaluating the final chosen topic, if you find that it does not adhere to the criteria well enough (i.e it is not
-        intellectually stimulating enough, intriguing enough, etc.), you may choose to conduct the topic search once more using the web
-        search tool, query tool, or both. For maximum efficiency, whenever you need to perform multiple independent operations, invoke all 
-        relevant tools simultaneously rather than sequentially.
+        Evaluate historical parallels. Given the historical topics below, evaluate them (internally) based on intellectual
+        stimulation, intrigue, as well as (perhaps) being unobvious. Using this criteria, select ONLY ONE topic from the group. Once you have
+        selected ONE topic, evaluate it using the same criteria as before, but without comparing it to the others (evaluate it on its
+        own merits). Upon evaluating the final chosen topic, if you find that it does not adhere to the criteria well enough, you may 
+        choose to conduct the topic search once more using the web search tool, query tool, or both. For maximum efficiency, whenever 
+        you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially. Your response
+        should ONLY CONTAIN THE TOPIC YOU HAVE CHOSEN.
         
         Query Results: {query_result}
 
