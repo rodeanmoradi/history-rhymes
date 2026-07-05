@@ -116,12 +116,8 @@ def pipeline(article):
                     tool = tools_dict[block.name]
                     tool_article = block.input["article"]
                     description = block.input["description"]
-                    if block.name == "web_search":
-                        search_result = tool(tool_article, description)
-                        tool_results.extend([{"type": "tool_result", "tool_use_id": f"{block.id}", "content": [{"type": "text", "text": f"{search_result}"}]}])
-                    else:
-                        query_result = tool(tool_article, description)
-                        tool_results.extend([{"type": "tool_result", "tool_use_id": f"{block.id}", "content": [{"type": "text", "text": f"{query_result}"}]}])
+                    result = tool(tool_article, description)
+                    tool_results.extend([{"type": "tool_result", "tool_use_id": f"{block.id}", "content": [{"type": "text", "text": f"{result}"}]}])
 
             messages.extend(
                 [{"role": "assistant", "content": eval_response.content},{"role": "user", "content": tool_results},])

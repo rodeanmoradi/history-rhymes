@@ -54,7 +54,7 @@ def get_search_prompt(article, description):
 
 def get_eval_prompt(search_result, query_result):
     prompt = f"""
-        Goal: evaluate historical parallels. Given the historical topics below, evaluate them based on intellectual
+        Goal: evaluate historical parallels. Given the historical topics below, evaluate them (internally) based on intellectual
         stimulation, intrigue, as well as (perhaps) being unobvious. Using this criteria, select one topic from the group. Once you have
         selected one topic, evaluate that one using the same criteria as before, but without comparing it to the others (evaluate it on its
         own merits). Upon evaluating the final chosen topic, if you find that it does not adhere to the criteria well enough (i.e it is not
