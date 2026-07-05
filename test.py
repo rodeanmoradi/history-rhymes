@@ -1,6 +1,6 @@
 from config import open_ai_client, anthropic_client, news_api_client, index
 from keywords import words
-from prompts import get_lesson_prompt
+from agents import pipeline
 import re
 
 top_headlines = news_api_client.get_top_headlines(category='general', language='en', country='us')
@@ -19,12 +19,6 @@ for i in range(len(filtered_headlines)):
 idx = int(input("Select index: "))
 article = filtered_headlines[idx]
 
-# Embed and query TODO: EVAL
-response = open_ai_client.embeddings.create(input=article, model="text-embedding-3-small")
-results = index.query(vector=response.data[0].embedding, top_k=5, include_metadata=True)
+output = pipeline(article)
 
-# Pass similar articles to Claude, get most intriguing, generate lesson about topic
-message = anthropic_client.messages.create(model="claude-opus-4-8", max_tokens=1024,
-                                           messages=[{"role": "user", "content": get_lesson_prompt(results, article)}])
-
-print(message.content[0].text)
+print(output)
