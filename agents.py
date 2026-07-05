@@ -30,15 +30,20 @@ def query(article, description):
 
 def search_eval(messages):
     # TODO: Make descriptions for tools
+    query_description = """
+        Searches a curated vector index of historical Wikipedia articles by semantic similarity. Provide a description phrased as 
+        the themes and concepts you want matches for — the description is what gets embedded and searched, so abstract thematic 
+        phrasing (e.g. "naval blockade forcing economic collapse") surfaces better parallels than literal headline text. Returns the 
+        top 5 matching articles as titles with abstracts. Reuse it with a reformulated 
+        description if earlier results were too literal or off-theme. Limited to what exists in the index.
+    """
+    search_description = """
+        Conducts open-ended live web research to find three historical parallels to the article, with short summaries of each. Slower 
+        and more expensive than query. Returns the three candidate parallels as text.
+    """
     tools = [{
         "name": "query",
-        "description": """
-            Searches a curated vector index of historical Wikipedia articles by semantic similarity. Provide a description phrased as 
-            the themes and concepts you want matches for — the description is what gets embedded and searched, so abstract thematic 
-            phrasing (e.g. "naval blockade forcing economic collapse") surfaces better parallels than literal headline text. Returns the 
-            top 5 matching articles as titles with abstracts. Reuse it with a reformulated 
-            description if earlier results were too literal or off-theme. Limited to what exists in the index.
-        """,
+        "description": query_description,
         "input_schema": {
             "type": "object",
             "properties": {
@@ -56,10 +61,7 @@ def search_eval(messages):
     },
     {
         "name": "web_search",
-        "description": """
-            Conducts open-ended live web research to find three historical parallels to the article, with short summaries of each. Slower 
-            and more expensive than query. Returns the three candidate parallels as text.
-        """,
+        "description": search_description,
         "input_schema": {
             "type": "object",
             "properties": {

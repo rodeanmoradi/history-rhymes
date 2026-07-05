@@ -62,9 +62,9 @@ def get_eval_prompt(search_result, query_result):
         search tool, query tool, or both. For maximum efficiency, whenever you need to perform multiple independent operations, invoke all 
         relevant tools simultaneously rather than sequentially.
         
-        Topics 1-5: {query_result}
+        Query Results: {query_result}
 
-        Topics 6-8: {search_result}
+        Search Results: {search_result}
     """
     
     return prompt
