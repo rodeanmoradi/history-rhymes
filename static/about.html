@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it works — History Rhymes</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-page="about">
+  <header class="masthead">
+    <h1><a href="/">History Rhymes</a></h1>
+    <p class="motto">Today's news, and the last time it happened.</p>
+  </header>
+  <div class="dateline"><span id="today"></span><span><a href="/">Front page</a></span></div>
+
+  <h2>What this is</h2>
+  <p>Pick a news story and History Rhymes finds an event from the past that followed the same pattern, then writes a
+    two-minute lesson about it, illustrated with stick figures. Every lesson ends with where the comparison stops
+    working, because no two events are the same.</p>
+
+  <h2>How a lesson is made</h2>
+  <ol>
+    <li><b>Headlines.</b> Top stories are pulled from NewsAPI every hour, and a language model keeps the ones with
+      some depth to them (power, money, conflict, disease, institutions) and drops sport, celebrity and the like.</li>
+    <li><b>Candidates.</b> Two searches run at once. One is a semantic search over an archive of several hundred
+      thousand Wikipedia history articles, embedded with OpenAI's <i>text-embedding-3-small</i> and stored in
+      Pinecone. The other is a Claude agent with live web search, asked for three parallels.</li>
+    <li><b>The choice.</b> A second agent weighs the candidates. If none is good enough it can search again, this
+      time describing the underlying mechanism (say, “a creditor state forcing austerity on a debtor”) instead of
+      the headline's words, which tends to retrieve much better parallels. It gets two rounds.</li>
+    <li><b>The lesson.</b> A writer model turns the choice and the source material into sections, each with a
+      scene description: who is in it, how they stand, what props are around, what they say. Your browser draws
+      the scene from that description; no image model is involved, which is why every drawing looks the same.</li>
+  </ol>
+  <p>Each lesson page has a “How this lesson was made” note listing the alternatives considered, the sources
+    retrieved, and the time and cost.</p>
+
+  <h2>Is it any good?</h2>
+  <p>The retrieval step is measured against a labelled test set; the method and results are in the
+    <code>eval/</code> directory of the source code.</p>
+
+  <h2>Caveats</h2>
+  <p>The lessons are written by a language model. It is instructed to stick to well-documented facts and to leave
+    out anything uncertain, but it can still be wrong. The sources are listed so you can check.</p>
+
+  <footer>Built with Claude, OpenAI embeddings, Pinecone and FastAPI.</footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>

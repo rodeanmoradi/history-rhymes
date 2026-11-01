@@ -1,0 +1,136 @@
+/* Two-colour print: ink and one spot colour on cream paper. No rounded corners, shadows or gradients. */
+:root {
+  --ink: #1d1b18;
+  --grey: #6b665d;
+  --rule: #b9b2a3;
+  --paper: #f8f5ec;
+  --panel: #fffdf6;
+  --spot: #b8432f;
+  --link: #1f3f8f;
+  --visited: #5d2f80;
+}
+
+html { background: var(--paper); }
+
+body {
+  margin: 0 auto;
+  max-width: 660px;
+  padding: 18px 20px 40px;
+  color: var(--ink);
+  font: 17px/1.55 Georgia, "Times New Roman", Times, serif;
+}
+
+a { color: var(--link); }
+a:visited { color: var(--visited); }
+a:hover { color: var(--spot); }
+
+/* ---- masthead ---- */
+
+.masthead { text-align: center; border-bottom: 3px double var(--ink); padding-bottom: 6px; margin-bottom: 4px; }
+.masthead h1 { margin: 0; font-size: 46px; font-weight: normal; letter-spacing: 0.01em; }
+.masthead h1 a, .masthead h1 a:visited { color: var(--ink); text-decoration: none; }
+.masthead .motto { margin: 0; font-style: italic; color: var(--grey); }
+
+.dateline {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ink);
+  padding: 3px 0;
+  font-size: 13px;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+}
+
+/* ---- headings and text ---- */
+
+h2 {
+  margin: 30px 0 10px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.muted { color: var(--grey); }
+.small { font-size: 14px; }
+
+/* ---- front page ---- */
+
+ol.headlines { padding-left: 28px; }
+ol.headlines li { margin-bottom: 9px; }
+ol.headlines .source { color: var(--grey); font-size: 14px; font-style: italic; }
+
+form.own { display: flex; gap: 6px; }
+form.own input {
+  flex: 1;
+  padding: 4px 6px;
+  border: 1px solid var(--grey);
+  background: #fff;
+  font: inherit;
+  font-size: 16px;
+}
+form.own button, .button {
+  padding: 3px 12px;
+  border: 1px solid var(--ink);
+  background: #ece7da;
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+form.own button:active { background: #ddd6c5; }
+
+ul.recent { list-style: square; padding-left: 22px; }
+ul.recent li { margin-bottom: 6px; }
+
+/* ---- lesson page ---- */
+
+.kicker { margin: 26px 0 0; color: var(--spot); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; }
+.lesson h1 { margin: 2px 0 6px; font-size: 34px; font-weight: normal; line-height: 1.15; }
+.dek { margin: 0 0 10px; font-size: 19px; font-style: italic; }
+.prompted { margin: 0; padding: 6px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); font-size: 14px; }
+
+.lesson h3 { margin: 28px 0 6px; font-size: 21px; font-weight: bold; }
+
+figure { margin: 14px 0 6px; }
+figure .panel { border: 1px solid var(--ink); background: var(--panel); }
+figure svg { display: block; width: 100%; height: auto; }
+figcaption { margin-top: 5px; font-size: 14px; font-style: italic; color: var(--grey); }
+figcaption b { font-style: normal; color: var(--ink); }
+
+table.then-now { width: 100%; border-collapse: collapse; font-size: 16px; }
+table.then-now th, table.then-now td { border: 1px solid var(--rule); padding: 6px 8px; vertical-align: top; text-align: left; }
+table.then-now th { background: #ece7da; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+table.then-now td.now { color: var(--spot); }
+
+.dinkus { margin: 26px 0 8px; text-align: center; letter-spacing: 0.8em; }
+.takeaway { margin: 0 auto; max-width: 520px; font-size: 19px; font-style: italic; text-align: center; }
+
+details.making { margin-top: 30px; border-top: 1px solid var(--rule); padding-top: 8px; font-size: 15px; }
+details.making summary { cursor: pointer; color: var(--link); text-decoration: underline; }
+details.making table { border-collapse: collapse; font-size: 14px; margin: 8px 0; }
+details.making td { padding: 1px 12px 1px 0; vertical-align: top; }
+
+/* ---- working ---- */
+
+.working { margin-top: 26px; }
+pre.log {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  font: 14px/1.6 "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+}
+.error { border: 1px solid var(--spot); padding: 8px 10px; color: var(--spot); background: var(--panel); }
+
+/* ---- footer ---- */
+
+footer { margin-top: 44px; padding-top: 6px; border-top: 1px solid var(--ink); color: var(--grey); font-size: 13px; }
+
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .masthead h1 { font-size: 34px; }
+  .lesson h1 { font-size: 27px; }
+}

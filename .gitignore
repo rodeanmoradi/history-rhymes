@@ -1,1 +1,8 @@
 .env
+.venv/
+__pycache__/
+.DS_Store
+data/
+eval/**/traces/
+eval/**/report.html
+eval/**/trajectory/

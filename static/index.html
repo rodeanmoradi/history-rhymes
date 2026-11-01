@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>History Rhymes</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-page="home">
+  <header class="masthead">
+    <h1><a href="/">History Rhymes</a></h1>
+    <p class="motto">Today's news, and the last time it happened.</p>
+  </header>
+  <div class="dateline"><span id="today"></span><span><a href="/about">How it works</a></span></div>
+
+  <h2>Today's headlines</h2>
+  <p class="small muted">Pick a story and get a short, illustrated lesson on its closest parallel in history.</p>
+  <ol class="headlines" id="headlines"><li class="muted">Fetching today's papers…</li></ol>
+
+  <h2>Or bring your own</h2>
+  <form class="own" id="own">
+    <input name="headline" type="text" minlength="10" maxlength="300" required
+           placeholder="Paste a headline" aria-label="Headline">
+    <button type="submit">Explain</button>
+  </form>
+
+  <h2>Recently explained</h2>
+  <ul class="recent" id="recent"><li class="muted">Nothing yet.</li></ul>
+
+  <footer>
+    Lessons are written by a language model from Wikipedia and the open web, and can be wrong.
+    Each one lists its sources; check them.
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
