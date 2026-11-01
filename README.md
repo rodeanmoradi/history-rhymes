@@ -29,7 +29,7 @@ NewsAPI ──► headline triage (Claude, structured output) ──► front pa
               lesson writer (Claude, structured output)
               sections + scene specs + then/now + caveats, validated & retried
                            │
-                           ▼
+                           ▼`
               SQLite cache ──► FastAPI ──► browser renders scenes as SVG stick figures (static/sketch.js)
 ```
 
